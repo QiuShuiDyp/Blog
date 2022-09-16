@@ -10,7 +10,7 @@ export default class Dep {
   removeSub(sub) {
     remove(this.subs, sub);
   }
-  // shouji yilai
+  // 收集依赖
   depend() {
     if (window.target) {
       this.addSub(window.target);

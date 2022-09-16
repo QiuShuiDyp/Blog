@@ -1,10 +1,13 @@
 // 声明一个监听类，将所有object的属性进行监听
 import Dep from "../common/Dep";
-class Observer {
+import {arrayMethods} from './Array'
+export class Observer {
   constructor(value) {
     this.value = value;
     if (!Array.isArray(value)) {
       this.walk(value);
+    } else {
+        value.__proto__  = 
     }
   }
 
