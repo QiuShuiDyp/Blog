@@ -8,7 +8,7 @@ class Observer {
     }
   }
 
-  // 遍历
+  // 遍历属性，重新定义get/set
   walk(obj) {
     const keys = Object.keys(obj);
     keys.forEach((key) => {
@@ -26,9 +26,7 @@ class Observer {
       enumerable: true,
       configurable: true,
       get() {
-        if (window.target) {
-          dep.depend(window.target);
-        }
+        dep.depend();
         return val;
       },
       set(newVal) {
