@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="300" height="300"></canvas>
+  </body>
+</html>
+<script>
+  var sun = new Image();
+  var moon = new Image();
+  var earth = new Image();
+  function init() {
+    sun.src =
+      "https://yari-demos.prod.mdn.mozit.cloud/en-US/docs/Web/API/Canvas_API/Tutorial/Basic_animations/canvas_sun.png";
+    moon.src =
+      "https://yari-demos.prod.mdn.mozit.cloud/en-US/docs/Web/API/Canvas_API/Tutorial/Basic_animations/canvas_moon.png";
+    earth.src =
+      "https://yari-demos.prod.mdn.mozit.cloud/en-US/docs/Web/API/Canvas_API/Tutorial/Basic_animations/canvas_earth.png";
+    // 在浏览器重绘之前，请求浏览器之心给一个特定函数来更新动画
+    window.requestAnimationFrame(draw);
+  }
+
+  function draw() {
+    var ctx = document.getElementById("canvas").getContext("2d");
+
+    ctx.globalCompositeOperation = "destination-over";
+    // 清空画布
+    ctx.clearRect(0, 0, 300, 300); // clear canvas
+    // 颜色填充
+    ctx.fillStyle = "rgba(0,0,0,0.4)";
+    // 边框颜色
+    ctx.strokeStyle = "rgba(0,153,255,0.4)";
+    // 保存不变化的元素
+    ctx.save();
+    // 移动原点
+    ctx.translate(150, 150);
+
+    // Earth
+    var time = new Date();
+    // 以原点为中心旋转，入参为旋转角度
+    ctx.rotate(
+      ((2 * Math.PI) / 60) * time.getSeconds() +
+        ((2 * Math.PI) / 60000) * time.getMilliseconds()
+    );
+    ctx.translate(105, 0);
+    ctx.fillRect(0, -12, 50, 24); // Shadow
+    ctx.drawImage(earth, -12, -12);
+
+    // Moon
+    ctx.save();
+    ctx.rotate(
+      ((2 * Math.PI) / 6) * time.getSeconds() +
+        ((2 * Math.PI) / 6000) * time.getMilliseconds()
+    );
+    ctx.translate(0, 28.5);
+    ctx.drawImage(moon, -3.5, -3.5);
+    ctx.restore();
+
+    ctx.restore();
+
+    ctx.beginPath();
+    //绘制地球环绕轨道
+    ctx.arc(150, 150, 105, 0, Math.PI * 2, false); // Earth orbit
+    ctx.stroke();
+    //绘制太阳
+    ctx.drawImage(sun, 0, 0, 300, 300);
+    //嵌套回调
+    window.requestAnimationFrame(draw);
+  }
+
+  init();
+</script>
