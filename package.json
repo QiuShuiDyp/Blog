@@ -1,0 +1,14 @@
+{
+  "name": "blog-scaffold",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CLI to scaffold articles (MD) and Vite+Vue3+TS projects",
+  "license": "MIT",
+  "bin": {
+    "blog-scaffold": "scripts/scaffold.js"
+  },
+  "scripts": {
+    "scaffold": "node scripts/scaffold.js"
+  }
+}
+
